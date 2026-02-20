@@ -36,6 +36,14 @@ function App() {
     )
   }
 
+  function handleRollOrNewGame() {
+    if (gameWon) {
+      setDice(generateNewDice())
+    } else {
+      rollDice()
+    }
+  }
+
   return (
     <div className="app">
       {gameWon && (
@@ -60,8 +68,8 @@ function App() {
             />
           ))}
         </div>
-        <button type="button" className="roll-btn" onClick={rollDice}>
-          {gameWon ? 'You Won!' : 'Roll'}
+        <button type="button" className="roll-btn" onClick={handleRollOrNewGame}>
+          {gameWon ? 'New Game' : 'Roll'}
         </button>
       </div>
     </div>
