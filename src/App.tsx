@@ -1,8 +1,15 @@
+import { useState } from 'react'
 import { Die } from './Die'
 import './App.css'
 
+function randomDie() {
+  return Math.floor(Math.random() * 6) + 1
+}
+
 function App() {
-  const dice = Array.from({ length: 10 }, () => 1)
+  const [dice] = useState(() =>
+    Array.from({ length: 10 }, randomDie)
+  )
 
   return (
     <div className="app">
