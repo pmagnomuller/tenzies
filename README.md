@@ -1,73 +1,64 @@
-# React + TypeScript + Vite
+# Tenzies
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A small dice game built with React + TypeScript + Vite. Roll until all ten dice show the same value—click a die to freeze it between rolls. This project showcases core React concepts learned during study.
 
-Currently, two official plugins are available:
+![Tenzies game screenshot](./homepage.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## React concepts demonstrated
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. **`useState`** — Managing the game state (the array of dice with `value`, `id`, and `isHeld`) in the root component.
 
-## Expanding the ESLint configuration
+2. **Lazy initial state** — Using a function in `useState(() => generateNewDice())` so the initial dice are created once instead of on every re-render.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+3. **Functional updates** — Using the updater form of `setState` (e.g. `setDice(oldDice => ...)` and `setDice(prev => ...)`) when the new state depends on the previous state, avoiding stale closures.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+4. **Components & composition** — Splitting the UI into `App` (layout and game logic) and `Die` (single die UI), composed together.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+5. **Props** — Passing data and behavior into `Die`: `id`, `value`, `isHeld`, and `onHold` for type-safe, reusable components.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+6. **TypeScript interfaces** — Defining `DieProps` so component props are typed and easier to refactor.
+
+7. **Conditional rendering** — Showing confetti only when the game is won (`{gameWon && <Confetti ... />}`) and switching the button label between "Roll" and "New Game".
+
+8. **Rendering lists & `key`** — Mapping over `dice` to render `<Die>` components and using a stable `key={die.id}` for correct reconciliation and performance.
+
+9. **Event handlers** — Using `onClick` to wire user actions (hold a die, roll / new game) to state updates.
+
+10. **Lifting state up** — Keeping the dice state in `App` and passing it down to `Die`; child updates happen via callbacks (`onHold`) so the single source of truth stays in the parent.
+
+11. **Controlled components** — Each `Die` is fully driven by props (`value`, `isHeld`); the parent owns the state and passes it down.
+
+12. **Derived state** — `gameWon` is computed from `dice` (e.g. with `every`) instead of being stored in state, avoiding duplication and sync bugs.
+
+13. **Immutability** — Updating state by returning new arrays/objects (e.g. `map` and spread `{ ...die }`) instead of mutating the existing state.
+
+14. **JSX** — Using JSX for structure, `className`, and embedding expressions (`{value}`, `{gameWon ? 'New Game' : 'Roll'}`).
+
+15. **React Strict Mode** — Wrapping the app in `<StrictMode>` in `main.tsx` to surface potential issues during development.
+
+---
+
+## Run locally
+
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Build for production:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
+npm run preview
 ```
+
+---
+
+## Stack
+
+- **React 19** — UI library
+- **TypeScript** — Typing
+- **Vite** — Build tool and dev server
+- **react-confetti** — Victory animation
