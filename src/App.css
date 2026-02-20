@@ -7,6 +7,13 @@
   padding: 2rem;
 }
 
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
 .dice-container {
   background: #e8e8e8;
   padding: 2rem;
@@ -14,4 +21,20 @@
   display: grid;
   grid-template-columns: repeat(5, auto);
   gap: 1.25rem;
+}
+
+.roll-btn {
+  padding: 0.75rem 2.5rem;
+  background: #5035ff;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.roll-btn:hover {
+  background: #4328e0;
 }

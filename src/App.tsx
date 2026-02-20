@@ -7,16 +7,25 @@ function randomDie() {
 }
 
 function App() {
-  const [dice] = useState(() =>
+  const [dice, setDice] = useState(() =>
     Array.from({ length: 10 }, randomDie)
   )
 
+  function rollDice() {
+    setDice(() => Array.from({ length: 10 }, randomDie))
+  }
+
   return (
     <div className="app">
-      <div className="dice-container">
-        {dice.map((value, i) => (
-          <Die key={i} value={value} />
-        ))}
+      <div className="game">
+        <div className="dice-container">
+          {dice.map((value, i) => (
+            <Die key={i} value={value} />
+          ))}
+        </div>
+        <button type="button" className="roll-btn" onClick={rollDice}>
+          Roll
+        </button>
       </div>
     </div>
   )
