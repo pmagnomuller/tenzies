@@ -8,13 +8,15 @@ function randomDie() {
 }
 
 function App() {
-  const [dice, setDice] = useState(() =>
-    Array.from({ length: 10 }, (_, i) => ({
+  const [dice, setDice] = useState(() => generateNewDice())
+
+  function generateNewDice() {
+    return Array.from({ length: 10 }, (_, i) => ({
       id: i,
       value: randomDie(),
       isHeld: false,
     }))
-  )
+  }
 
   const gameWon = dice.every(die => die.isHeld) && dice.every(die => die.value === dice[0].value)
 
