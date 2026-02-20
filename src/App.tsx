@@ -37,11 +37,7 @@ function App() {
   }
 
   function handleRollOrNewGame() {
-    if (gameWon) {
-      setDice(generateNewDice())
-    } else {
-      rollDice()
-    }
+    gameWon ? setDice(generateNewDice()) : rollDice()
   }
 
   return (
