@@ -27,7 +27,7 @@ function App() {
       <div className="game">
         <div className="dice-container">
           {dice.map((die, i) => (
-            <Die key={i} value={die.value} />
+            <Die key={i} value={die.value} isHeld={die.isHeld} />
           ))}
         </div>
         <button type="button" className="roll-btn" onClick={rollDice}>

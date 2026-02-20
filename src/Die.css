@@ -15,3 +15,7 @@
   cursor: pointer;
   font-family: inherit;
 }
+
+.die.die--held {
+  background: #59e391;
+}
